@@ -12,6 +12,7 @@
             <th scope="col">Address</th>
             <th scope="col">City</th>
             <th scope="col">Established Year</th>
+            <th>Action</th>
         </tr>
     </thead>
     <tbody>
@@ -23,6 +24,10 @@
                 <td>@library.Address</td>
                 <td>@library.City</td>
                 <td>@library.EstablishedYear</td>
+                <td>
+                    <a asp-controller="Libraries" asp-action="Edit" asp-route-id="@library.Id" class="btn btn-warning">Edit</a>
+                    <a asp-controller="Libraries" asp-action="Delete" asp-route-id="@library.Id" class="btn btn-danger">Delete</a>
+                </td>
             </tr>
         }
     </tbody>

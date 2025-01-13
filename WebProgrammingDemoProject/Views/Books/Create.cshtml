@@ -1,0 +1,43 @@
+﻿@model CreateBookInputModel
+
+@{
+    this.ViewData["Title"] = "Create Genre Page";
+}
+
+<h1 class="text-center">Create Library</h1>
+
+<form method="post" asp-controller="Books" asp-action="Create">
+    <div asp-validation-summary="All" class="alert-danger"></div>
+
+    <div class="form-group">
+        <label asp-for="Title"></label>
+        <input class="form-control" asp-for="Title" />
+        <span asp-validation-for="Title" class="alert-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="ISBN"></label>
+        <input class="form-control" asp-for="ISBN" />
+        <span asp-validation-for="ISBN" class="alert-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="PublishedYear"></label>
+        <input class="form-control" asp-for="PublishedYear" type="number" />
+        <span asp-validation-for="PublishedYear" class="alert-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="PageCount"></label>
+        <input class="form-control" asp-for="PageCount" type="number" />
+        <span asp-validation-for="PageCount" class="alert-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="GenreId">Genre</label>
+        <select class="form-select" asp-for="GenreId" asp-items="@this.Model.GenreItems"></select>
+        <span asp-validation-for="GenreId" class="alert-danger"></span>
+    </div>
+
+    <input type="submit" value="Create" class="btn btn-primary mt-3" />
+</form>

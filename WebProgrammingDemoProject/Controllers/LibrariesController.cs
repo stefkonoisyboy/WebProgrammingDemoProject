@@ -39,5 +39,35 @@ namespace WebProgrammingDemoProject.Controllers
 
             return this.RedirectToAction("All", "Libraries");
         }
+
+        public async Task<IActionResult> Edit(int id)
+        {
+            EditLibraryInputModel editLibraryInputModel = await this.librariesService
+                .GetByIdAsync(id);
+
+            return this.View(editLibraryInputModel);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Edit(int id, EditLibraryInputModel editLibraryInputModel)
+        {
+            if (!this.ModelState.IsValid)
+            {
+                return this.View(editLibraryInputModel);
+            }
+
+            await this.librariesService.EditAsync(editLibraryInputModel);
+            this.TempData["Message"] = "Library is edited successfully!";
+
+            return this.RedirectToAction("All", "Libraries");
+        }
+
+        public async Task<IActionResult> Delete(int id)
+        {
+            await this.librariesService.DeleteAsync(id);
+            this.TempData["Message"] = "Library is deleted successfully!";
+
+            return this.RedirectToAction("All", "Libraries");
+        }
     }
 }

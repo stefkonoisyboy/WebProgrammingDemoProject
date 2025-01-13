@@ -29,6 +29,31 @@ namespace WebProgrammingDemoProject.Services
             await this.dbContext.SaveChangesAsync();
         }
 
+        public async Task DeleteAsync(int id)
+        {
+            Library library = await this.dbContext.Libraries
+                .FirstOrDefaultAsync(l => l.Id == id);
+
+            this.dbContext.Libraries.Remove(library);
+
+            await this.dbContext.SaveChangesAsync();
+        }
+
+        public async Task EditAsync(EditLibraryInputModel editLibraryInputModel)
+        {
+            Library library = await this.dbContext.Libraries
+                .FirstOrDefaultAsync(l => l.Id == editLibraryInputModel.Id);
+
+            library.Name = editLibraryInputModel.Name;
+            library.Address = editLibraryInputModel.Address;
+            library.City = editLibraryInputModel.City;
+            library.EstablishedYear = editLibraryInputModel.EstablishedYear;
+
+            this.dbContext.Libraries.Update(library);
+
+            await this.dbContext.SaveChangesAsync();
+        }
+
         public async Task<IEnumerable<LibraryViewModel>> GetAllAsync()
         {
             IEnumerable<LibraryViewModel> libraryViewModels = await this.dbContext.Libraries
@@ -43,6 +68,23 @@ namespace WebProgrammingDemoProject.Services
                 .ToListAsync();
 
             return libraryViewModels;
+        }
+
+        public async Task<EditLibraryInputModel> GetByIdAsync(int id)
+        {
+            EditLibraryInputModel editLibraryInputModel = await this.dbContext.Libraries
+                .Where(l => l.Id == id)
+                .Select(l => new EditLibraryInputModel
+                {
+                    Id = l.Id,
+                    Name = l.Name,
+                    Address = l.Address,
+                    City = l.City,
+                    EstablishedYear = l.EstablishedYear,
+                })
+                .FirstOrDefaultAsync();
+
+            return editLibraryInputModel;
         }
     }
 }
